@@ -163,8 +163,22 @@ units_sold = int(df_overview["units_sold"])
 customers = int(df_overview["purchasing_customers"])
 revenue_per_order = float(df_overview["revenue_per_order"])
 
+
+def compact_currency(value):
+    """Keep large currency KPIs readable inside narrow metric cards."""
+    if abs(value) >= 1_000_000:
+        return f"${value / 1_000_000:.1f}M"
+    if abs(value) >= 1_000:
+        return f"${value / 1_000:.1f}K"
+    return f"${value:,.2f}"
+
+
 kpi_revenue, kpi_orders, kpi_aov, kpi_customers, kpi_units = st.columns(5)
-kpi_revenue.metric("Revenue", f"${revenue:,.2f}")
+kpi_revenue.metric(
+    "Revenue",
+    compact_currency(revenue),
+    help=f"Exact revenue: ${revenue:,.2f}",
+)
 kpi_orders.metric("Orders", f"{orders:,}")
 kpi_aov.metric(
     "Revenue per order",

@@ -124,6 +124,31 @@ st.info(
     "variable-width row. Triplets can be analyzed separately if needed."
 )
 
+with st.expander("How support, confidence, and lift are calculated", expanded=True):
+    st.markdown(
+        """
+Suppose there are **100 orders**: category A appears in 30, category B in 20,
+and both A and B appear together in 10.
+
+- **Pair orders = 10** — the direct number of orders containing both categories.
+- **Support = 10 / 100 = 10%** — how common the pair is among all orders.
+- **Confidence A → B = 10 / 30 = 33.3%** — among orders with A, how many also contain B.
+- **Confidence B → A = 10 / 20 = 50%** — the reverse direction can be different.
+- **Lift = 10% / (30% × 20%) = 1.67** — A and B occur together 1.67 times as often as expected if their purchases were independent.
+
+Lift above 1 suggests a positive association, lift near 1 suggests no special
+association, and lift below 1 means the pair occurs less often than expected.
+For recommendations, look for meaningful support **and** lift above 1. High lift
+with very low support may describe only a tiny niche and should be tested before
+being shown broadly. Directional confidence is useful for deciding what to show
+on a specific category page.
+
+This dashboard currently analyzes **category pairs**, not exact products. A real
+“customers also bought” block on a product card would use the same method at
+product level and should be validated with an experiment.
+        """
+    )
+
 if df_pairs.empty:
     st.warning("There are no orders containing at least two selected categories.")
     st.stop()

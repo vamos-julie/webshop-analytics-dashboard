@@ -102,7 +102,7 @@ abc_sql = f"""
             ELSE 'Healthy: 60+ days'
         END AS stock_status
     FROM revenue_rank AS rr
-    LEFT JOIN current_stock AS cs USING (product_id)
+    LEFT JOIN current_stock AS cs ON cs.product_id = rr.product_id
     ORDER BY rr.revenue DESC, rr.product_id
 """
 
@@ -172,7 +172,7 @@ variant_stock_sql = f"""
     JOIN webshop.products AS p ON p.id = rvs.product_id
     JOIN webshop.colors AS col ON col.id = a.colorid
     JOIN webshop.sizes AS si ON si.id = a.size
-    LEFT JOIN current_stock AS cs USING (article_id)
+    LEFT JOIN current_stock AS cs ON cs.article_id = rvs.article_id
     ORDER BY rvs.units_sold_last_90_days DESC, rvs.article_id
 """
 

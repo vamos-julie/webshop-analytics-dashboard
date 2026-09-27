@@ -174,10 +174,38 @@ with right_chart:
     st.altair_chart(rfm_scatter, use_container_width=True)
 
 st.info(
-    "Scores are quartiles within the selected data slice, so segment boundaries "
-    "change when filters change. This is useful for prioritization, not a causal "
-    "prediction of future purchases."
+    "RFM is a common framework, but seven segments are not a universal standard. "
+    "The names and rules below are a practical business interpretation and can be "
+    "adapted to the webshop's goals."
 )
+
+with st.expander("Why quartiles, and what to do with each segment", expanded=True):
+    st.markdown(
+        """
+**Why quartiles?** Each RFM measure is split into four similarly sized ranked
+groups. A score of 4 means that a customer is in the strongest relative group:
+more recent, more frequent, or higher-spending. This avoids inventing arbitrary
+cash and day thresholds and works even when the scale of the data changes.
+
+The trade-off is that these scores are **relative to the selected data**. Filter
+changes can move a customer between quartiles, and customers with equal values
+may be separated at a boundary. Quartiles are therefore useful for prioritizing
+customers, not for predicting behavior with certainty.
+
+| Segment | Rule used here | Suggested action |
+|---|---|---|
+| Champions | R = 4, F ≥ 3, M ≥ 3 | VIP access, referrals, premium cross-sell; avoid unnecessary blanket discounts. |
+| Loyal customers | F = 4, R ≥ 2 | Loyalty rewards, replenishment reminders, subscriptions, cross-sell. |
+| Potential loyalists | R ≥ 3, F = 2–3 | Encourage the next purchase with personalized recommendations. |
+| New customers | R = 4, F = 1 | Onboarding, post-purchase education, and a reason to make a second order. |
+| At risk | R ≤ 2, F ≥ 3 | Personalized win-back campaign and reminders based on prior purchases. |
+| Hibernating | R ≤ 2, F ≤ 2 | Low-cost reactivation; reduce contact if there is no response. |
+| Needs attention | All remaining combinations | Review preferences and test a targeted offer rather than a mass campaign. |
+
+Some rules overlap. SQL `CASE` checks them from top to bottom, so the first
+matching segment wins—for example, a Champion is not classified again as Loyal.
+        """
+    )
 
 with st.expander("Segment summary", expanded=True):
     st.dataframe(segment_summary, hide_index=True, use_container_width=True)

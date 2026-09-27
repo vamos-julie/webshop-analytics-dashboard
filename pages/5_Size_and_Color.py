@@ -64,18 +64,22 @@ top_color = color_summary.sort_values("units_sold", ascending=False).iloc[0]
 
 kpi_units, kpi_size, kpi_color = st.columns(3)
 kpi_units.metric("Units analyzed", f"{int(df_variants['units_sold'].sum()):,}")
-kpi_size.metric(
-    "Largest category-size combination",
-    f"{top_size['category']} / {top_size['size']}",
-    delta=f"{int(top_size['units_sold']):,} units",
-    delta_color="off",
-)
-kpi_color.metric(
-    "Largest category-color combination",
-    f"{top_color['category']} / {top_color['color']}",
-    delta=f"{int(top_color['units_sold']):,} units",
-    delta_color="off",
-)
+with kpi_size:
+    st.metric(
+        "Top category by size",
+        str(top_size["category"]),
+        delta=f"{int(top_size['units_sold']):,} units",
+        delta_color="off",
+    )
+    st.caption(f"Size: {top_size['size']}")
+with kpi_color:
+    st.metric(
+        "Top category by color",
+        str(top_color["category"]),
+        delta=f"{int(top_color['units_sold']):,} units",
+        delta_color="off",
+    )
+    st.caption(f"Color: {top_color['color']}")
 
 size_tab, color_tab = st.tabs(["Sizes", "Colors"])
 
