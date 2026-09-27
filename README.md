@@ -31,8 +31,8 @@ is running locally on port `5432` and that the current database user can create 
 database.
 
 ```bash
-git clone https://github.com/vamos-julie/Webshop-streamlit-demo.git
-cd Webshop-streamlit-demo
+git clone https://github.com/vamos-julie/webshop-analytics-dashboard.git
+cd webshop-analytics-dashboard
 
 python3 -m venv .venv
 source .venv/bin/activate
