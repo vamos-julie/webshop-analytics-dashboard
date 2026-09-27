@@ -4,6 +4,8 @@ A multipage Streamlit portfolio project built on a PostgreSQL webshop dataset.
 It demonstrates SQL aggregation at order, customer, product, and article-variant
 grain, together with practical commercial analytics.
 
+[Open the live Streamlit dashboard](https://webshop-analytics-dashboard.streamlit.app/)
+
 ## What is included
 
 - Management dashboard: revenue, orders, units, categories, labels, discounts,
