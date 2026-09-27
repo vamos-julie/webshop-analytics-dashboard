@@ -24,6 +24,9 @@ grain, together with practical commercial analytics.
 All analytical pages have date, category, label, and product-audience filters.
 They also expose their SQL in the interface so the calculations can be studied.
 
+See [VALIDATION.md](VALIDATION.md) for baseline totals, independent SQL checks,
+page-level test cases, and a deployment checklist.
+
 ## Run locally
 
 Requirements: Python 3.11+ and PostgreSQL. The commands below assume PostgreSQL
@@ -83,6 +86,7 @@ pages/3_Basket_Analysis.py      Category affinity metrics
 pages/4_ABC_and_Inventory.py    Product ABC and variant restocking
 pages/5_Size_and_Color.py       Variant demand patterns
 pages/6_Data_Quality.py         Automated data checks
+VALIDATION.md                   Manual analytical validation guide
 db_dump/mydb.dump               PostgreSQL demo data
 ```
 
